@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Python Flask Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+    <main class="container">
+        <h1>Python Calculator</h1>
+        <p class="subtitle">Standard, Scientific, and Circle calculators (PI = 3.14)</p>
+
+        {% if result %}
+            <div class="alert success">{{ result }}</div>
+        {% endif %}
+
+        {% if error %}
+            <div class="alert error">{{ error }}</div>
+        {% endif %}
+
+        <section class="card {% if active_section == 'standard' %}active{% endif %}">
+            <h2>Standard Calculator</h2>
+            <form method="post">
+                <input type="hidden" name="section" value="standard" />
+
+                <div class="grid two-col">
+                    <label>
+                        First number
+                        <input type="text" name="standard_a" value="{{ form_data.standard_a }}" required />
+                    </label>
+                    <label>
+                        Second number
+                        <input type="text" name="standard_b" value="{{ form_data.standard_b }}" required />
+                    </label>
+                </div>
+
+                <label>
+                    Operation
+                    <select name="standard_operation">
+                        <option value="add" {% if form_data.standard_operation == 'add' %}selected{% endif %}>Add (+)</option>
+                        <option value="subtract" {% if form_data.standard_operation == 'subtract' %}selected{% endif %}>Subtract (-)</option>
+                        <option value="multiply" {% if form_data.standard_operation == 'multiply' %}selected{% endif %}>Multiply (×)</option>
+                        <option value="divide" {% if form_data.standard_operation == 'divide' %}selected{% endif %}>Divide (÷)</option>
+                        <option value="power" {% if form_data.standard_operation == 'power' %}selected{% endif %}>Power (x^y)</option>
+                        <option value="percent_of" {% if form_data.standard_operation == 'percent_of' %}selected{% endif %}>Percent of (x * y%)</option>
+                    </select>
+                </label>
+
+                <button type="submit">Calculate Standard Result</button>
+            </form>
+        </section>
+
+        <section class="card {% if active_section == 'scientific' %}active{% endif %}">
+            <h2>Scientific Calculator</h2>
+            <form method="post">
+                <input type="hidden" name="section" value="scientific" />
+
+                <label>
+                    Value / Angle (degrees for trig)
+                    <input type="text" name="scientific_value" value="{{ form_data.scientific_value }}" required />
+                </label>
+
+                <label>
+                    Operation
+                    <select name="scientific_operation">
+                        <option value="sqrt" {% if form_data.scientific_operation == 'sqrt' %}selected{% endif %}>Square root</option>
+                        <option value="sin" {% if form_data.scientific_operation == 'sin' %}selected{% endif %}>sin (degrees)</option>
+                        <option value="cos" {% if form_data.scientific_operation == 'cos' %}selected{% endif %}>cos (degrees)</option>
+                        <option value="tan" {% if form_data.scientific_operation == 'tan' %}selected{% endif %}>tan (degrees)</option>
+                        <option value="percent" {% if form_data.scientific_operation == 'percent' %}selected{% endif %}>Percent (x%)</option>
+                    </select>
+                </label>
+
+                <button type="submit">Calculate Scientific Result</button>
+            </form>
+        </section>
+
+        <section class="card {% if active_section == 'circle' %}active{% endif %}">
+            <h2>Circle Calculator (PI = 3.14)</h2>
+            <form method="post">
+                <input type="hidden" name="section" value="circle" />
+
+                <label>
+                    Radius
+                    <input type="text" name="circle_radius" value="{{ form_data.circle_radius }}" required />
+                </label>
+
+                <label>
+                    Operation
+                    <select name="circle_operation">
+                        <option value="area" {% if form_data.circle_operation == 'area' %}selected{% endif %}>Area (πr²)</option>
+                        <option value="circumference" {% if form_data.circle_operation == 'circumference' %}selected{% endif %}>Circumference (2πr)</option>
+                    </select>
+                </label>
+
+                <button type="submit">Calculate Circle Result</button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>
